@@ -139,11 +139,5 @@ Run the tests with:
 ./gradlew test
 ```
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
 Built with ❤️ by [Amit Upadhyay]
 This is a Kotlin-based Spring Boot application built with Gradle, demonstrating basic CRUD operations (Create, Read, Update, Delete). The project follows a layered architecture with Controller, Service, and Repository to keep the code structured and maintainable.
