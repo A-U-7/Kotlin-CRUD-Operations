@@ -17,6 +17,108 @@
 - [🔍 Troubleshooting](#-troubleshooting)
 - [🏗️ Advanced Usage](#️-advanced-usage)
 
+## 🚀 Kotlin-CRUD Run Commands
+
+### Local Development
+```bash
+# Build the application
+./gradlew build
+
+# Run the application (development mode with auto-reload)
+./gradlew bootRun
+
+# Run tests
+./gradlew test
+
+# Build a production JAR
+./gradlew bootJar
+
+# Run the built JAR
+java -jar build/libs/*.jar
+```
+
+### Docker Commands
+```bash
+# Build and run with Docker Compose
+docker-compose up -d --build
+
+# View logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
+
+# Rebuild a specific service
+docker-compose up -d --build <service_name>
+
+# Access container shell
+docker-compose exec <service_name> sh
+```
+
+### Building Docker Image Manually
+```bash
+# Build the application JAR
+./gradlew bootJar
+
+# Build Docker image
+docker build -t kotlin-crud-app .
+
+# Run container
+docker run -d -p 8080:8080 --name kotlin-crud-container kotlin-crud-app
+
+# View logs
+docker logs -f kotlin-crud-container
+
+# Stop container
+docker stop kotlin-crud-container
+
+# Remove container
+docker rm kotlin-crud-container
+
+# Remove image
+docker rmi kotlin-crud-app
+```
+
+### Common Operations
+```bash
+# View running containers
+docker ps
+
+# View all containers (including stopped)
+docker ps -a
+
+# View container logs
+docker logs <container_id_or_name>
+
+# Stop container
+docker stop <container_id_or_name>
+
+# Remove container
+docker rm <container_id_or_name>
+
+# Remove all stopped containers
+docker container prune
+
+# View Docker images
+docker images
+
+# Remove Docker image
+docker rmi <image_id_or_name>
+
+# Remove all unused images
+docker image prune -a
+```
+
+# Access the application
+curl http://localhost:8080/api/users
+
+# Access H2 Console (if enabled)
+# http://localhost:8080/h2-console
+# JDBC URL: jdbc:h2:file:/data/kotlin_db
+# Username: sa
+# Password: (leave empty)
+```
+
 ## 🚀 Quick Start
 
 Get your Kotlin CRUD application up and running with just one command:
