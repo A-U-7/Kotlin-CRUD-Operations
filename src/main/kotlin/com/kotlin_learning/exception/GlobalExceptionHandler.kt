@@ -3,6 +3,8 @@ package com.kotlin_learning.exception
 import com.kotlin_learning.dto.ApiResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.FieldError
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 
@@ -22,4 +24,22 @@ class GlobalExceptionHandler {
             ApiResponse(success = false, message = "Internal server error")
         )
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    fun handleValidationExceptions(ex: MethodArgumentNotValidException): ResponseEntity<ApiResponse<Map<String, String?>>> {
+        val errors = mutableMapOf<String, String?>()
+        ex.bindingResult.allErrors.forEach { error ->
+            val fieldName = (error as FieldError).field
+            val errorMessage = error.defaultMessage
+            errors[fieldName] = errorMessage
+        }
+        return ResponseEntity.badRequest().body(
+            ApiResponse(
+                success = false,
+                message = "Validation failed",
+                data = errors
+            )
+        )
+    }
+
 }
