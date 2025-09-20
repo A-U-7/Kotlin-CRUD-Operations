@@ -127,6 +127,34 @@ docker rmi <image_id_or_name>
 docker image prune -a
 ```
 
+### Miscellaneous Docker Commands
+```bash
+# Check if a specific container exists (Windows/PowerShell)
+docker ps -a | findstr kotlin-crud-container
+
+# Build a Docker image from the current directory
+docker build -t kotlin-crud-app .
+
+# Run a container in detached mode with port mapping
+docker run -d -p 8080:8080 --name kotlin-crud-container kotlin-crud-app
+
+# Check if a container is running
+docker ps | findstr kotlin-crud-container
+
+# View the last 50 lines of container logs
+docker logs --tail 50 kotlin-crud-container
+
+# Execute a command in a running container
+docker exec -it kotlin-crud-container /bin/sh
+
+# View container resource usage statistics
+docker stats kotlin-crud-container
+
+# Copy files to/from container
+docker cp <container_id>:/path/in/container /path/on/host
+docker cp /path/on/host <container_id>:/path/in/container
+```
+
 # Access the application
 curl http://localhost:8080/api/users
 
