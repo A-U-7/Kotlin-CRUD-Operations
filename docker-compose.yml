@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  kotlin-crud:
+    build: .
+    container_name: kotlin_crud
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:h2:file:/data/kotlin_db;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE
+      - SPRING_H2_CONSOLE_ENABLED=true
+      - SPRING_H2_CONSOLE_PATH=/h2-console
+    volumes:
+      - h2-data:/data:rw
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - kotlin-network
+
+networks:
+  kotlin-network:
+    driver: bridge
+
+volumes:
+  h2-data:
