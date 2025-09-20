@@ -39,20 +39,38 @@ java -jar build/libs/*.jar
 
 ### Docker Commands
 ```bash
-# Build and run with Docker Compose
+# Build and run with Docker Compose (detached mode with build)
 docker-compose up -d --build
 
-# View logs
+# View logs in real-time
 docker-compose logs -f
+
+# View last N lines of logs
+docker-compose logs --tail=100 -f
+
+# View logs for a specific service
+docker-compose logs -f <service_name>
+
+# View last N lines for a specific service
+docker-compose logs --tail=50 -f <service_name>
 
 # Stop all services
 docker-compose down
 
-# Rebuild a specific service
+# Stop and remove containers, networks, and volumes
+docker-compose down -v
+
+# Rebuild and restart a specific service
 docker-compose up -d --build <service_name>
 
 # Access container shell
 docker-compose exec <service_name> sh
+
+# View running services
+docker-compose ps
+
+# View all services (including stopped)
+docker-compose ps -a
 ```
 
 ### Building Docker Image Manually
