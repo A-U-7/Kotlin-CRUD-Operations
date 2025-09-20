@@ -4,6 +4,7 @@ package com.kotlin_learning.controller
 import com.kotlin_learning.dto.ApiResponse
 import com.kotlin_learning.dto.UserRequest
 import com.kotlin_learning.service.UserService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -32,7 +33,7 @@ class UserController(private val userService: UserService) {
 
     // http://localhost:8080/api/users
     @PostMapping
-    fun createUser(@RequestBody request: UserRequest): ResponseEntity<ApiResponse<*>> {
+    fun createUser(@Valid @RequestBody request: UserRequest): ResponseEntity<ApiResponse<*>> {
         val user = userService.createUser(request)
         return ResponseEntity.status(HttpStatus.CREATED).body(
             ApiResponse(success = true, message = "User created successfully", data = user)
