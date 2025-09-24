@@ -1,4 +1,88 @@
-# 🚀 Kotlin CRUD Operations API
+# 🚀 Kotlin CRUD Operations with Spring Boot, Kafka, and MySQL
+
+This is a Kotlin-based CRUD application built with Spring Boot, featuring:
+- RESTful API endpoints
+- MySQL database integration
+- Apache Kafka for event-driven architecture
+- Containerized with Docker
+- Kubernetes deployment ready
+
+## Prerequisites
+
+- Docker and Docker Compose
+- Kubernetes cluster (Docker Desktop, Minikube, or cloud-based)
+- kubectl configured to communicate with your cluster
+- JDK 21
+- Gradle
+
+## Local Development
+
+### Using Docker Compose
+
+1. Start the application with dependencies:
+   ```bash
+   docker-compose up -d
+   ```
+
+2. The application will be available at: http://localhost:8080
+
+### Running Locally
+
+1. Start the required services:
+   ```bash
+   docker-compose up -d mysql kafka
+   ```
+
+2. Run the application:
+   ```bash
+   ./gradlew bootRun
+   ```
+
+## Kubernetes Deployment
+
+1. Make sure your Kubernetes cluster is running and kubectl is configured.
+
+2. Deploy the application:
+   ```bash
+   chmod +x deploy.sh
+   ./deploy.sh
+   ```
+
+3. Access the application:
+   ```bash
+   kubectl port-forward svc/kotlin-crud-service 8080:80 -n kotlin-crud
+   ```
+   Then open http://localhost:8080 in your browser
+
+## API Documentation
+
+Once the application is running, you can access:
+- Swagger UI: http://localhost:8080/swagger-ui.html
+- API Docs: http://localhost:8080/api-docs
+
+## Architecture
+
+- **Web Layer**: Spring MVC REST controllers
+- **Service Layer**: Business logic and transaction management
+- **Repository Layer**: JPA repositories for data access
+- **Event-Driven**: Kafka for asynchronous event processing
+- **Persistence**: MySQL for data storage
+
+## Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| SPRING_DATASOURCE_URL | MySQL JDBC URL | jdbc:mysql://mysql:3306/kotlin_db |
+| SPRING_DATASOURCE_USERNAME | Database username | root |
+| SPRING_DATASOURCE_PASSWORD | Database password | root |
+| SPRING_KAFKA_BOOTSTRAP_SERVERS | Kafka bootstrap servers | kafka:9092 |
+
+## Monitoring
+
+The application includes Spring Boot Actuator endpoints for monitoring:
+- Health: `/actuator/health`
+- Metrics: `/actuator/metrics`
+- Info: `/actuator/info` API
 
 A robust RESTful API built with Spring Boot and Kotlin that demonstrates CRUD (Create, Read, Update, Delete) operations for a User management system.
 
