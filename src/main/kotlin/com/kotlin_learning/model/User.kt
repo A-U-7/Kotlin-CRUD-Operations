@@ -2,7 +2,9 @@ package com.kotlin_learning.model
 
 import jakarta.persistence.*
 import jakarta.validation.constraints.*
+
 import java.time.LocalDateTime
+
 
 @Entity
 @Table(name = "users")
