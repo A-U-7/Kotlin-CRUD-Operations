@@ -15,15 +15,15 @@ import java.time.LocalDateTime
 
 @Service
 @Transactional(readOnly = true)
-class UserService(private val userRepository: UserRepository) {
+open class UserService(private val userRepository: UserRepository) {
 
     @Cacheable(value = ["users"], key = "'all'")
-    fun getAllUsers(): List<UserResponse> {
+    open fun getAllUsers(): List<UserResponse> {
         return userRepository.findAll().map { it.toResponse() }
     }
 
     @Cacheable(value = ["user"], key = "#id")
-    fun getUserById(id: Long): UserResponse {
+    open fun getUserById(id: Long): UserResponse {
         val user = userRepository.findById(id)
             .orElseThrow { RuntimeException("User not found with id: $id") }
         return user.toResponse()
@@ -34,7 +34,7 @@ class UserService(private val userRepository: UserRepository) {
             CacheEvict(value = ["users"], key = "'all'")
         ]
     )
-    fun createUser(request: UserRequest): UserResponse {
+    open fun createUser(request: UserRequest): UserResponse {
         if (userRepository.existsByEmail(request.email)) {
             throw RuntimeException("Email already exists: ${request.email}")
         }
@@ -55,7 +55,7 @@ class UserService(private val userRepository: UserRepository) {
         put = [CachePut(value = ["user"], key = "#id")],
         evict = [CacheEvict(value = ["users"], key = "'all'")]
     )
-    fun updateUser(id: Long, request: UserRequest): UserResponse {
+    open fun updateUser(id: Long, request: UserRequest): UserResponse {
         val existingUser = userRepository.findById(id)
             .orElseThrow { RuntimeException("User not found with id: $id") }
 
@@ -82,7 +82,7 @@ class UserService(private val userRepository: UserRepository) {
             CacheEvict(value = ["users"], key = "'all'")
         ]
     )
-    fun deleteUser(id: Long) {
+    open fun deleteUser(id: Long) {
         if (!userRepository.existsById(id)) {
             throw RuntimeException("User not found with id: $id")
         }
@@ -95,7 +95,7 @@ class UserService(private val userRepository: UserRepository) {
             CacheEvict(value = ["user"], allEntries = true)
         ]
     )
-    fun clearAllCaches() {
+    open fun clearAllCaches() {
         // This method will clear all caches when called
 
     }

@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.kafka.config.TopicBuilder
 
 @Configuration
-class KafkaConfig {
+open class KafkaConfig {
     
     @Bean
-    fun userEventsTopic(): NewTopic {
+    open fun userEventsTopic(): NewTopic {
         return TopicBuilder.name("user-events")
             .partitions(3)
             .replicas(1)

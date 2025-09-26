@@ -11,7 +11,7 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 import org.springframework.kafka.support.serializer.JsonDeserializer
 
 @Configuration
-class KafkaConsumerConfig(
+open class KafkaConsumerConfig(
     @Value("\${spring.kafka.bootstrap-servers}")
     private val bootstrapServers: String,
     @Value("\${spring.kafka.consumer.group-id}")
@@ -19,7 +19,7 @@ class KafkaConsumerConfig(
 ) {
 
     @Bean
-    fun consumerConfigs(): Map<String, Any> {
+    open fun consumerConfigs(): Map<String, Any> {
         val props: MutableMap<String, Any> = HashMap()
         props[ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG] = bootstrapServers
         props[ConsumerConfig.GROUP_ID_CONFIG] = groupId
@@ -31,7 +31,7 @@ class KafkaConsumerConfig(
     }
 
     @Bean
-    fun consumerFactory(): ConsumerFactory<String, Any> {
+    open fun consumerFactory(): ConsumerFactory<String, Any> {
         return DefaultKafkaConsumerFactory(
             consumerConfigs(),
             StringDeserializer(),
@@ -40,7 +40,7 @@ class KafkaConsumerConfig(
     }
 
     @Bean
-    fun kafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, Any> {
+    open fun kafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, Any> {
         val factory = ConcurrentKafkaListenerContainerFactory<String, Any>()
         factory.consumerFactory = consumerFactory()
         return factory

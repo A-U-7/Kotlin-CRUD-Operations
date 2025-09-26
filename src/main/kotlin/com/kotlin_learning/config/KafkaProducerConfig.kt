@@ -12,13 +12,13 @@ import org.springframework.kafka.core.ProducerFactory
 import org.springframework.kafka.support.serializer.JsonSerializer
 
 @Configuration
-class KafkaProducerConfig(
+open class KafkaProducerConfig(
     @Value("\${spring.kafka.bootstrap-servers}")
     private val bootstrapServers: String
 ) {
     
     @Bean
-    fun producerConfigs(): Map<String, Any> {
+    open fun producerConfigs(): Map<String, Any> {
         val props: MutableMap<String, Any> = HashMap()
         props[ProducerConfig.BOOTSTRAP_SERVERS_CONFIG] = bootstrapServers
         props[ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG] = StringSerializer::class.java
@@ -29,12 +29,12 @@ class KafkaProducerConfig(
     }
 
     @Bean
-    fun producerFactory(): ProducerFactory<String, Any> {
+    open fun producerFactory(): ProducerFactory<String, Any> {
         return DefaultKafkaProducerFactory(producerConfigs())
     }
 
     @Bean
-    fun kafkaTemplate(): KafkaTemplate<String, Any> {
+    open fun kafkaTemplate(): KafkaTemplate<String, Any> {
         return KafkaTemplate(producerFactory())
     }
 

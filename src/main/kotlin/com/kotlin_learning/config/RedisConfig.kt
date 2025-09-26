@@ -13,10 +13,10 @@ import java.time.Duration
 
 @Configuration
 @EnableCaching
-class RedisConfig {
+open class RedisConfig {
 
     @Bean
-    fun redisTemplate(connectionFactory: RedisConnectionFactory): RedisTemplate<String, Any> {
+    open fun redisTemplate(connectionFactory: RedisConnectionFactory): RedisTemplate<String, Any> {
         val template = RedisTemplate<String, Any>()
         template.connectionFactory = connectionFactory
         template.keySerializer = StringRedisSerializer()
@@ -27,7 +27,7 @@ class RedisConfig {
     }
 
     @Bean
-    fun cacheConfiguration(): RedisCacheConfiguration {
+    open fun cacheConfiguration(): RedisCacheConfiguration {
         return RedisCacheConfiguration.defaultCacheConfig()
             .entryTtl(Duration.ofMinutes(60))  // 60 minutes TTL by default
             .disableCachingNullValues()
