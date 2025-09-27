@@ -1,0 +1,84 @@
+# Docker and Service Management Commands
+
+## Docker Compose Commands
+# Start all services in detached mode
+docker-compose up -d
+
+# Stop all services
+docker-compose down
+
+# View logs for all services
+docker-compose logs -f
+
+# View logs for a specific service (e.g., kafka)
+docker-compose logs -f kafka
+
+# List all running containers
+docker ps
+
+# Stop a specific service
+docker-compose stop kafka
+
+# Start a specific service
+docker-compose start kafka
+
+# Rebuild and start services
+docker-compose up -d --build
+
+## Kafka Commands
+# List all topics
+docker exec -it kafka kafka-topics --bootstrap-server localhost:9092 --list
+
+# Create a new topic
+docker exec -it kafka kafka-topics --create --topic test-topic --partitions 3 --replication-factor 1 --bootstrap-server localhost:9092
+
+# Produce messages to a topic
+docker exec -it kafka bash -c "echo 'Hello, Kafka!' | kafka-console-producer --topic test-topic --bootstrap-server localhost:9092"
+
+# Consume messages from a topic
+docker exec -it kafka kafka-console-consumer --topic test-topic --from-beginning --bootstrap-server localhost:9092
+OR
+# Consume specific message
+docker exec kafka kafka-console-consumer --bootstrap-server localhost:9092 --topic user-events --partition 0 --offset 0 --max-messages 1
+
+# Describe a topic
+docker exec -it kafka kafka-topics --describe --topic test-topic --bootstrap-server localhost:9092
+
+## Zookeeper Commands
+# Connect to Zookeeper shell
+docker exec -it zookeeper zkCli.sh
+
+# List Zookeeper nodes (from inside Zookeeper shell)
+ls /
+
+## MySQL Commands
+# Connect to MySQL
+docker exec -it mysql mysql -u root -proot
+
+## Redis Commands
+# Connect to Redis CLI
+docker exec -it redis redis-cli
+
+## Service Health Checks
+# Check Kafka health
+docker exec kafka kafka-topics --bootstrap-server localhost:9092 --list
+
+# Check MySQL health
+docker exec mysql mysqladmin ping -u root -proot
+
+# Check Redis health
+docker exec redis redis-cli ping
+
+## Cleanup Commands
+# Stop and remove all containers, networks, and volumes
+docker-compose down -v
+
+# Remove all unused containers, networks, and images
+docker system prune -a
+
+## Port Information
+# Kafka: 9092 (external), 29092 (internal)
+# Zookeeper: 2181
+# MySQL: 3306
+# Redis: 6379
+# Application: 8080
